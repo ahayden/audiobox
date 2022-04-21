@@ -1,12 +1,15 @@
 version: "3.8"
 
 services:
-  ghcr-template:
-    image: ghcr.io/ahayden/ghcr-template:base
-    hostname: base
-    environment:
-      TERM: "xterm-color"
-    extra_hosts:
-      - "base:127.0.0.1"
-    container_name: base
-
+  shairport-sync:
+    image: mikebrady/shairport-sync
+    network_mode: host
+    restart: unless-stopped
+    devices:
+      - "/dev/snd"
+    volumes:
+      - ./shairport-sync.conf:/etc/shairport-sync.conf
+    logging:
+      options:
+        max-size: "200k"
+        max-file: "10"
